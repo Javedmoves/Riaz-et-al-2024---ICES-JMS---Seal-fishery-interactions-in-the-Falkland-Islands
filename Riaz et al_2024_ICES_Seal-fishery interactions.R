@@ -224,9 +224,6 @@ BycatchSummary_Trawls <- BycatchEvents %>%
   dplyr::select(Species, Year, Vessel_ID, date, lon, lat) %>%
   distinct()
 
-# (323+89)/(323+37+15+89+18+24)
-# (37+18)/(323+37+15+89+18+24)
-
 
 ## Read in Observer Data and classify behaviours 
 
@@ -262,7 +259,7 @@ Observerdata <- No_InteractSeals %>% ## Rejoin these data
   full_join(InteractSeals) %>%
   arrange(date)
 
-Observerdata$id <- paste(Observerdata$Vessel_ID, Observerdata$Trawl_ID) ## 45,903
+Observerdata$id <- paste(Observerdata$Vessel_ID, Observerdata$Trawl_ID) 
 
 
 # ##############################################################################################################################################
@@ -468,7 +465,7 @@ ggplot(Model_Events, aes(date, SSH, colour = lat)) + geom_point() + theme_bw()
 range(Model_Events$SSH)
 
 
-## Just retain the environmental vars in a separate DF. 
+. 
 ENV_Model_Frame <- Model_Events  %>%
   dplyr::select(id, lon, lat, ShortDate, SST, SSH, Bathymetry, BathymetrySlope) %>%
   distinct()
@@ -1180,7 +1177,7 @@ plot3_B
 plot4_B <- draw(smooth_estimates(Season_mod2, smooth = c("s(BathymetrySlope)"))) +
   labs(title = NULL) + 
   labs(caption = NULL) +
-  labs(x = "Bathymetry slope (°)") +
+  labs(x = "Bathymetry slope (Â°)") +
   theme_classic() + theme_bw(10) + theme(strip.background = element_rect(fill="gray85"))+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),  panel.border = element_rect(colour = "black")) 
 
 
