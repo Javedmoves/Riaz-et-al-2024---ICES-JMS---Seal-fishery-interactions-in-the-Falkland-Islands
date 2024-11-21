@@ -28,18 +28,11 @@ library(sf)
 library(rnaturalearthhires)
 library(data.table)
 library(parallel)
-library(future)
-library(future.apply)
-library(adehabitatLT)
 library(ggpubr)
 library(raadtools)
 library(rasterVis)
 library(RColorBrewer)
-library(gganimate) 
-require(transformr) 
-library(gifski)
 library(devtools)
-library(cividis)
 library(wesanderson)
 library(geosphere)
 library(mapview)
@@ -205,7 +198,6 @@ BycatchEvents <- read_csv("Just_BycatchEvents.csv")
 sum(BycatchEvents$`No Mortalities`)
 
 sum(BycatchEvents$`No Live Escapes (from water)`) + sum(BycatchEvents$`No Live Releases (from deck)`) + sum(BycatchEvents$`No Recaptured Carcasses`)
-
 
 BycatchSummary <- BycatchEvents %>%
   group_by(Species, Year) %>%
@@ -415,7 +407,7 @@ unique(Model_Events$Month)
 
 
 Model_Events <- Model_Events %>% ## Reset unrealistically small trawl duration to NA
-  mutate(Trawl_Duration = ifelse(Trawl_Duration <= 30, NA, Trawl_Duration)) ## 
+  mutate(Trawl_Duration = ifelse(Trawl_Duration <= 30, NA, Trawl_Duration))  
 
 Season_Summary <- Model_Events %>%
   group_by(Season) %>%
@@ -465,7 +457,6 @@ ggplot(Model_Events, aes(date, SSH, colour = lat)) + geom_point() + theme_bw()
 range(Model_Events$SSH)
 
 
-. 
 ENV_Model_Frame <- Model_Events  %>%
   dplyr::select(id, lon, lat, ShortDate, SST, SSH, Bathymetry, BathymetrySlope) %>%
   distinct()
@@ -507,7 +498,7 @@ count_points_within_distance_and_time <- function(df, distance_threshold, time_t
     
 
     within_distance_and_time <- distances <= distance_threshold &
-      abs(current_time - df$date) <= time_threshold * 3600  # Convert hours to seconds
+      abs(current_time - df$date) <= time_threshold * 3600  
     
     results[i] <- sum(within_distance_and_time)
   }
@@ -516,13 +507,13 @@ count_points_within_distance_and_time <- function(df, distance_threshold, time_t
 }
 
 # Time lag
-distance_threshold <- 20000  # 20km in meters
-time_threshold <- 24         # 24 hours
+distance_threshold <- 20000  
+time_threshold <- 24         
 Model_Events$Radius <- count_points_within_distance_and_time(Model_Events, distance_threshold, time_threshold)
 
 # Real-time
-distance_threshold <- 20000  # 20km in meters
-time_threshold <- 5        # 5 hours
+distance_threshold <- 20000  
+time_threshold <- 5       
 
 Model_Events$Realtime_Radius <- count_points_within_distance_and_time(Model_Events, distance_threshold, time_threshold)
 
