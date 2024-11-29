@@ -232,7 +232,7 @@ No_InteractSeals <- Observerdata %>% ##
 
 
 
-InteractSeals <- Observerdata %>% ## 10474 interactions
+InteractSeals <- Observerdata %>% 
   filter(Behaviour == "Foraging around the net"|
            Behaviour ==  "Eating from the net and climbing"|
            Behaviour ==  "Eating from the net"|
@@ -241,7 +241,7 @@ InteractSeals <- Observerdata %>% ## 10474 interactions
            Behaviour ==  "Foraging in the discard chute area"|
            Behaviour ==  "Eating from the discard chute"|
            Behaviour ==  "Bycatch"|
-           Behaviour ==  "Other") %>%
+           Behaviour ==  "Other") %>% ## Manually pre-cleaned. Crossed checked with the more detailed observer comments
   mutate(Interactions = "Interaction") %>%
   mutate(PresAbs = 1)
 
@@ -757,8 +757,8 @@ Check
 
 PlotFrameA <- Model_Frame %>%
   ungroup() %>%
-  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% ## 6km
-  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% ## 3km
+  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% 
+  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% 
   mutate(Lon_MAX =  plyr::round_any(lon, 0.50, f = ceiling)) %>%
   mutate(Lon_MIN =  plyr::round_any(lon, 0.50, f = floor)) %>%
   mutate(Lat_MAX =  plyr::round_any(lat, 0.25, f = ceiling)) %>%
@@ -773,8 +773,8 @@ PlotFrameA
 
 PlotFrameA1 <- Model_Frame %>%
   ungroup() %>%
-  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% ## 6km
-  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% ## 3km
+  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% 
+  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% 
   mutate(Lon_MAX =  plyr::round_any(lon, 0.50, f = ceiling)) %>%
   mutate(Lon_MIN =  plyr::round_any(lon, 0.50, f = floor)) %>%
   mutate(Lat_MAX =  plyr::round_any(lat, 0.25, f = ceiling)) %>%
@@ -788,8 +788,8 @@ PlotFrameA1
 
 PlotFrameB <- Model_Frame %>%
   ungroup() %>%
-  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% ## 6km
-  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% ## 3km
+  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% 
+  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>%
   mutate(Lon_MAX =  plyr::round_any(lon, 0.50, f = ceiling)) %>%
   mutate(Lon_MIN =  plyr::round_any(lon, 0.50, f = floor)) %>%
   mutate(Lat_MAX =  plyr::round_any(lat, 0.25, f = ceiling)) %>%
@@ -808,8 +808,8 @@ JustInteractions <- PlotFrameB %>%
 
 PlotFrameB1 <- Model_Frame %>%
   ungroup() %>%
-  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% ## 6km
-  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% ## 3km
+  mutate(Lat_BIN = as.character(cut(lat, breaks = seq(-54,-44, by = 0.25)))) %>% 
+  mutate(Lon_BIN = as.character(cut(lon, breaks = seq(-64,-56, by = 0.50))))  %>% 
   mutate(Lon_MAX =  plyr::round_any(lon, 0.50, f = ceiling)) %>%
   mutate(Lon_MIN =  plyr::round_any(lon, 0.50, f = floor)) %>%
   mutate(Lat_MAX =  plyr::round_any(lat, 0.25, f = ceiling)) %>%
@@ -1048,12 +1048,10 @@ Model_Frame$Scaled_TrawlDuration <- datawizard::standardise(Model_Frame$Trawl_Du
 Season1 <- Model_Frame %>%
   filter(Season == "Season 1")
 unique(Season1$Month)
-Season1 <- within(Season1, Yearre <- relevel(Year, ref = "2020"))
 
 Season2 <- Model_Frame %>%
   filter(Season == "Season 2")
 unique(Season1$Month)
-Season2 <- within(Season2, Yearre <- relevel(Year, ref = "2020"))
 
 
 options(scipen=999)
